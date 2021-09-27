@@ -71,7 +71,6 @@ function Profile() {
     const [fileBank, setFileBank] = useState("");
     const [fileCheque, setFileCheque] = useState("");
 
-
     const [previewFunction, setPreviewFunction] = useState({ imagePreview: "", chequePreview: "",creditPreview:"",idPreview:"",payPreview:"",bankPreview:"" });
 
     //other variables
@@ -100,7 +99,7 @@ function Profile() {
 
             setData(result);
         }
-
+        // set initial images and file preview
         function previewBox(a,b){
             if(a.split(".")[1] ==="pdf" || a.split(".")[1] ==="doc" || a.split(".")[1] ==="docx"){
                 setPreviewFunction(prevState =>({...prevState,[b]:<a href ={"http://localhost:8000/"+a} target='_blank'> {b}.{a.split(".")[1]}</a>}))
@@ -131,327 +130,84 @@ function Profile() {
         }
     },[])
 
+    function verifyInput(n,o,st){
+
+    }
 
     async function update (e){
         e.preventDefault();
         const formData = new FormData();
-        if(firstName === ""){
-            formData.append('firstName',data.firstName);
-        }else{
-            formData.append('firstName',firstName);
-        }
-        if(email === ""){
-            formData.append('email',data.email);
-        }else{
-            formData.append('email',email);
-        }
-        if(lastName === ""){
-            formData.append('lastName',data.lastName);
-        }else{
-            formData.append('lastName',lastName);
-        }
-        if(dateOfBirth === ""){
-            formData.append('dateOfBirth',data.dateOfBirth);
-        }else{
-            formData.append('dateOfBirth',dateOfBirth);
-        }
-        if(sin === ""){
-            formData.append('sin',data.sin);
-        }else{
-            formData.append('sin',sin);
-        }
-        if(phone === ""){
-            formData.append('phone',data.phone);
-        }else{
-            formData.append('phone',phone);
-        }
-        if(desiredPayment === ""){
-            formData.append('desiredPayment',data.desiredPayment);
-        }else{
-            formData.append('desiredPayment',desiredPayment);
-        }
-        if(maritalStatus === ""){
-            formData.append('maritalStatus',data.maritalStatus);
-        }else{
-            formData.append('maritalStatus',maritalStatus);
-        }
-        if(bankrupt === ""){
-            formData.append('bankrupt',data.bankrupt);
-        }else{
-            formData.append('bankrupt',bankrupt);
-        }
-        if(proposalConsumer === ""){
-            formData.append('proposalConsumer',data.proposalConsumer);
-        }else{
-            formData.append('proposalConsumer',proposalConsumer);
-        }
-        if(house === ""){
-            formData.append('house',data.house);
-        }else{
-            formData.append('house',house);
-        }
-        if(mortgageRent === ""){
-            formData.append('mortgageRent',data.mortgageRent);
-        }else{
-            formData.append('mortgageRent',mortgageRent);
-        }
-        if(streetAddress === ""){
-            formData.append('streetAddress',data.streetAddress);
-        }else{
-            formData.append('streetAddress',streetAddress);
-        }
-        if(city === ""){
-            formData.append('city',data.city);
-        }else{
-            formData.append('city',city);
-        }
-        if(province === ""){
-            formData.append('province',data.province);
-        }else{
-            formData.append('province',province);
-        }
-        if(postcode === ""){
-            formData.append('postcode',data.postcode);
-        }else{
-            formData.append('postcode',postcode);
-        }
-        if(streetAddress2 === ""){
-            formData.append('streetAddress2',data.streetAddress2);
-        }else{
-            formData.append('streetAddress2',streetAddress2);
-        }
-        if(city2 === ""){
-            formData.append('city2',data.city2);
-        }else{
-            formData.append('city2',city2);
-        }
-        if(province2 === ""){
-            formData.append('province2',data.province2);
-        }else{
-            formData.append('province2',province2);
-        }
-        if(postcode2 === ""){
-            formData.append('postcode2',data.postcode2);
-        }else{
-            formData.append('postcode2',postcode2);
-        }
-        if(country2 === ""){
-            formData.append('country2',data.country2);
-        }else{
-            formData.append('country2',country2);
+        function verifyInput(n,o,st){
+            if(n === ""){
+                formData.append(st,o);
+            }else{
+                formData.append(st,n);
+            }
         }
 
-        if(sinceWhen === ""){
-            formData.append('sinceWhen',data.sinceWhen);
-        }else{
-            formData.append('sinceWhen',sinceWhen);
-        }
-        if(vehicle === ""){
-            formData.append('vehicle',data.vehicle);
-        }else{
-            formData.append('vehicle',vehicle);
-        }
-        if(vin === ""){
-            formData.append('vin',data.vin);
-        }else{
-            formData.append('vin',vin);
-        }
-        if(kilometrage === ""){
-            formData.append('kilometrage',data.kilometrage);
-        }else{
-            formData.append('kilometrage',kilometrage);
-        }
-        if(carCondition === ""){
-            formData.append('carCondition',data.carCondition);
-        }else{
-            formData.append('carCondition',carCondition);
-        }
-        if(carFaxLink === ""){
-            formData.append('carFaxLink',data.carFaxLink);
-        }else{
-            formData.append('carFaxLink',carFaxLink);
-        }
-        if(dealerName === ""){
-            formData.append('dealerName',data.dealerName);
-        }else{
-            formData.append('dealerName',dealerName);
-        }
-        if(amountCar === ""){
-            formData.append('amountCar',data.amountCar);
-        }else{
-            formData.append('amountCar',amountCar);
-        }
-        if(amountDeposit === ""){
-            formData.append('amountDeposit',data.amountDeposit);
-        }else{
-            formData.append('amountDeposit',amountDeposit);
-        }
-        if(amountFinanced === ""){
-            formData.append('amountFinanced',data.amountFinanced);
-        }else{
-            formData.append('amountFinanced',amountFinanced);
-        }
+        verifyInput(email,data.email,"email");
+        verifyInput(firstName,data.firstName,"firstName");
+        verifyInput(lastName,data.lastName,"lastName");
+        verifyInput(dateOfBirth,data.dateOfBirth,"dateOfBirth");
+        verifyInput(sin,data.sin,"sin");
+        verifyInput(phone,data.phone,"phone");
+        verifyInput(desiredPayment,data.desiredPayment,"desiredPayment");
+        verifyInput(maritalStatus,data.maritalStatus,"maritalStatus");
+        verifyInput(bankrupt,data.bankrupt,"bankrupt");
+        verifyInput(proposalConsumer,data.proposalConsumer,"proposalConsumer");
+        verifyInput(house,data.house,"house");
+        verifyInput(mortgageRent,data.mortgageRent,"mortgageRent");
+        verifyInput(streetAddress,data.streetAddress,"streetAddress");
+        verifyInput(city,data.city,"city");
+        verifyInput(province,data.province,"province");
+        verifyInput(postcode,data.postcode,"postcode");
+        verifyInput(streetAddress2,data.streetAddress2,"streetAddress2");
+        verifyInput(city2,data.city2,"city2");
+        verifyInput(province2,data.province2,"province2");
+        verifyInput(postcode2,data.postcode2,"postcode2");
+        verifyInput(country2,data.country2,"country2");
+        verifyInput(sinceWhen,data.sinceWhen,"sinceWhen");
+        verifyInput(vehicle,data.vehicle,"vehicle");
+        verifyInput(vin,data.vin,"vin");
+        verifyInput(kilometrage,data.kilometrage,"kilometrage");
+        verifyInput(carCondition,data.carCondition,"carCondition");
+        verifyInput(carFaxLink,data.carFaxLink,"carFaxLink");
+        verifyInput(dealerName,data.dealerName,"dealerName");
+        verifyInput(amountCar,data.amountCar,"amountCar");
+        verifyInput(amountDeposit,data.amountDeposit,"amountDeposit");
+        verifyInput(amountFinanced,data.amountFinanced,"amountFinanced");
+        verifyInput(employer,data.employer,"employer");
+        verifyInput(employerAddress,data.employerAddress,"employerAddress");
+        verifyInput(nameSuperior,data.nameSuperior,"nameSuperior");
+        verifyInput(employerPhone,data.employerPhone,"employerPhone");
+        verifyInput(positionHeld,data.positionHeld,"positionHeld");
+        verifyInput(employerSinceWhen,data.employerSinceWhen,"employerSinceWhen");
+        verifyInput(schedules,data.schedules,"schedules");
+        verifyInput(salary,data.salary,"salary");
+        verifyInput(annualRevenue,data.annualRevenue,"annualRevenue");
+        verifyInput(employer2,data.employer2,"employer2");
+        verifyInput(employerAddress2,data.employerAddress2,"employerAddress2");
+        verifyInput(nameSuperior2,data.nameSuperior2,"nameSuperior2");
+        verifyInput(employerPhone2,data.employerPhone2,"employerPhone2");
+        verifyInput(positionHeld2,data.positionHeld2,"positionHeld2");
+        verifyInput(employerSinceWhen2,data.employerSinceWhen2,"employerSinceWhen2");
+        verifyInput(schedules2,data.schedules2,"schedules2");
+        verifyInput(salary2,data.salary2,"salary2");
+        verifyInput(annualRevenue2,data.annualRevenue2,"annualRevenue2");
+        verifyInput(income1Name,data.income1Name,"income1Name");
+        verifyInput(income1Amount,data.income1Amount,"income1Amount");
+        verifyInput(income2Name,data.income2Name,"income2Name");
+        verifyInput(income2Amount,data.income2Amount,"income2Amount");
+        verifyInput(income3Name,data.income3Name,"income3Name");
+        verifyInput(income3Amount,data.income3Amount,"income3Amount");
+        verifyInput(feedbacks,data.feedbacks,"feedbacks");
 
-        if(employer === ""){
-            formData.append('employer',data.employer);
-        }else{
-            formData.append('employer',employer);
-        }
-        if(employerAddress === ""){
-            formData.append('employerAddress',data.employerAddress);
-        }else{
-            formData.append('employerAddress',employerAddress);
-        }
-        if(nameSuperior === ""){
-            formData.append('nameSuperior',data.nameSuperior);
-        }else{
-            formData.append('nameSuperior',nameSuperior);
-        }
-        if(employerPhone === ""){
-            formData.append('employerPhone',data.employerPhone);
-        }else{
-            formData.append('employerPhone',employerPhone);
-        }
-        if(positionHeld === ""){
-            formData.append('positionHeld',data.positionHeld);
-        }else{
-            formData.append('positionHeld',positionHeld);
-        }
-        if(employerSinceWhen === ""){
-            formData.append('employerSinceWhen',data.employerSinceWhen);
-        }else{
-            formData.append('employerSinceWhen',employerSinceWhen);
-        }
-        if(schedules === ""){
-            formData.append('schedules',data.schedules);
-        }else{
-            formData.append('schedules',schedules);
-        }
-        if(salary === ""){
-            formData.append('salary',data.salary);
-        }else{
-            formData.append('salary',salary);
-        }
-        if(annualRevenue === ""){
-            formData.append('annualRevenue',data.annualRevenue);
-        }else{
-            formData.append('annualRevenue',annualRevenue);
-        }
-        if(employer2 === ""){
-            formData.append('employer2',data.employer2);
-        }else{
-            formData.append('employer2',employer2);
-        }
-        if(employerAddress2 === ""){
-            formData.append('employerAddress2',data.employerAddress2);
-        }else{
-            formData.append('employerAddress2',employerAddress2);
-        }
-        if(nameSuperior2 === ""){
-            formData.append('nameSuperior2',data.nameSuperior2);
-        }else{
-            formData.append('nameSuperior2',nameSuperior2);
-        }
-        if(employerPhone2 === ""){
-            formData.append('employerPhone2',data.employerPhone2);
-        }else{
-            formData.append('employerPhone2',employerPhone2);
-        }
-        if(positionHeld2 === ""){
-            formData.append('positionHeld2',data.positionHeld2);
-        }else{
-            formData.append('positionHeld2',positionHeld2);
-        }
-        if(employerSinceWhen2 === ""){
-            formData.append('employerSinceWhen2',data.employerSinceWhen2);
-        }else{
-            formData.append('employerSinceWhen2',employerSinceWhen2);
-        }
-        if(schedules2 === ""){
-            formData.append('schedules2',data.schedules2);
-        }else{
-            formData.append('schedules2',schedules2);
-        }
-        if(salary2 === ""){
-            formData.append('salary2',data.salary2);
-        }else{
-            formData.append('salary2',salary2);
-        }
-        if(annualRevenue2 === ""){
-            formData.append('annualRevenue2',data.annualRevenue2);
-        }else{
-            formData.append('annualRevenue2',annualRevenue2);
-        }
-        if(income1Name === ""){
-            formData.append('income1Name',data.income1Name);
-        }else{
-            formData.append('income1Name',income1Name);
-        }
-        if(income1Amount === ""){
-            formData.append('income1Amount',data.income1Amount);
-        }else{
-            formData.append('income1Amount',income1Amount);
-        }
-        if(income2Name === ""){
-            formData.append('income2Name',data.income2Name);
-        }else{
-            formData.append('income2Name',income2Name);
-        }
-        if(income2Amount === ""){
-            formData.append('income2Amount',data.income2Amount);
-        }else{
-            formData.append('income2Amount',income2Amount);
-        }
-        if(income3Name === ""){
-            formData.append('income3Name',data.income3Name);
-        }else{
-            formData.append('income3Name',income3Name);
-        }
-        if(income3Amount === ""){
-            formData.append('income3Amount',data.income3Amount);
-        }else{
-            formData.append('income3Amount',income3Amount);
-        }
-        if(feedbacks === ""){
-            formData.append('feedbacks',data.feedbacks);
-        }else{
-            formData.append('feedbacks',feedbacks);
-        }
-
-        if(fileVehicle === ""){
-            formData.append('fileVehicle_path',data.fileVehicle_path);
-        }else{
-            formData.append('fileVehicle_path',fileVehicle);
-        }
-        if(fileCredit === ""){
-            formData.append('fileCredit_path',data.fileCredit_path);
-        }else{
-            formData.append('fileCredit_path',fileCredit);
-        }
-        if(fileId === ""){
-            formData.append('fileId_path',data.fileId_path);
-        }else{
-            formData.append('fileId_path',fileId);
-        }
-        if(filePay === ""){
-            formData.append('filePay_path',data.filePay_path);
-        }else{
-            formData.append('filePay_path',filePay);
-        }
-        if(fileBank === ""){
-            formData.append('fileBank_path',data.fileBank_path);
-        }else{
-            formData.append('fileBank_path',fileBank);
-        }
-        if(fileCheque === ""){
-            formData.append('fileCheque_path',data.fileCheque_path);
-        }else{
-            formData.append('fileCheque_path',fileCheque);
-        }
-
-        // for (var value of formData.values()) {
-        //     console.log(value);
-        //  }
+        verifyInput(fileVehicle,data.fileVehicle_path,"fileVehicle_path");
+        verifyInput(fileCredit,data.fileCredit_path,"fileCredit_path");
+        verifyInput(fileId,data.fileId_path,"fileId_path");
+        verifyInput(filePay,data.filePay_path,"filePay_path");
+        verifyInput(fileBank,data.fileBank_path,"fileBank_path");
+        verifyInput(fileCheque,data.fileCheque_path,"fileCheque_path");
 
         let result = await fetch("http://localhost:8000/api/profile/"+ profileIndex,{
             method: 'POST',
@@ -484,7 +240,7 @@ function Profile() {
         }
     }
 
-
+    // set update images and file preview
     function updatePreviewBox(a,b){
         if(a.name.split(".")[1] ==="pdf" || a.name.split(".")[1] ==="doc" || a.name.split(".")[1] ==="docx"){
             setPreviewFunction(prevState =>({...prevState,[b]:<a href ={a && URL.createObjectURL(a)} target='_blank'>{a.name}</a>}))
@@ -493,8 +249,6 @@ function Profile() {
             setPreviewFunction(prevState =>({...prevState,[b]:<img style={{width:150, height:150}} src={a && URL.createObjectURL(a)}/>}))
         }
     }
-
-
 
     useEffect(()=>{
 
@@ -518,9 +272,6 @@ function Profile() {
                     </div>
 
                     }
-                    {/* <div className="mt-5 text-end">
-                        {displayPasswordResetBtn}
-                    </div> */}
                     <h3 className="mt-3">{t("formInformation")}</h3> 
                     <Form className="mt-5 text-start p-3" onSubmit = {update} style={{boxShadow :'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}> 
                         <Row >
