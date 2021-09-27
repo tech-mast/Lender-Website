@@ -71,13 +71,9 @@ function Profile() {
     const [fileBank, setFileBank] = useState("");
     const [fileCheque, setFileCheque] = useState("");
 
-    const [imagePreviewFunction, setImagePreviewFunction] = useState("");
-    const [creditPreviewFunction, setCreditPreviewFunction] = useState("");
-    const [idPreviewFunction, setIdPreviewFunction] = useState("");
-    const [payPreviewFunction, setPayPreviewFunction] = useState("");
-    const [bankPreviewFunction, setBankPreviewFunction] = useState("");
-    const [chequePreviewFunction, setChequePreviewFunction] = useState("");
-    // const [displayPasswordResetBtn, setDisplayPasswordResetBtn] = useState("");
+
+    const [previewFunction, setPreviewFunction] = useState({ imagePreview: "", chequePreview: "",creditPreview:"",idPreview:"",payPreview:"",bankPreview:"" });
+
     //other variables
     const history = useHistory();
     const[isReadonly, setIsReadonly] = useState(true);
@@ -105,53 +101,33 @@ function Profile() {
             setData(result);
         }
 
-        if(result.fileVehicle_path){
-            if(result.fileVehicle_path.split(".")[1] ==="pdf" || result.fileVehicle_path.split(".")[1] ==="doc" || result.fileVehicle_path.split(".")[1] ==="docx"){
-                setImagePreviewFunction(<a href ={"http://localhost:8000/"+result.fileVehicle_path} target='_blank'> VehicleWindowFilm.{result.fileVehicle_path.split(".")[1]}</a>)
+        function previewBox(a,b){
+            if(a.split(".")[1] ==="pdf" || a.split(".")[1] ==="doc" || a.split(".")[1] ==="docx"){
+                setPreviewFunction(prevState =>({...prevState,[b]:<a href ={"http://localhost:8000/"+a} target='_blank'> {b}.{a.split(".")[1]}</a>}))
             }
             else{
-                setImagePreviewFunction(<img style={{width:150, height:150}} src={"http://localhost:8000/"+result.fileVehicle_path}/>)
+                setPreviewFunction(prevState =>({...prevState,[b]:<img style={{width:150, height:150}} src={"http://localhost:8000/"+a}/>}))
             }
         }
+
+        if(result.fileVehicle_path){
+            previewBox(result.fileVehicle_path,"imagePreview");
+        }
+
         if(result.fileCredit_path){
-            if(result.fileCredit_path.split(".")[1] ==="pdf" || result.fileCredit_path.split(".")[1] ==="doc" || result.fileCredit_path.split(".")[1] ==="docx"){
-                setCreditPreviewFunction(<a href ={"http://localhost:8000/"+result.fileCredit_path} target='_blank'>creditReport.{result.fileCredit_path.split(".")[1]}</a>)
-            }
-            else{
-                setCreditPreviewFunction(<img style={{width:150, height:150}} src={"http://localhost:8000/"+result.fileCredit_path}/>)
-            }
+            previewBox(result.fileCredit_path,"creditPreview");
         }
         if(result.fileId_path){
-            if(result.fileId_path.split(".")[1] ==="pdf" || result.fileId_path.split(".")[1] ==="doc" || result.fileId_path.split(".")[1] ==="docx"){
-                setIdPreviewFunction(<a href ={"http://localhost:8000/"+result.fileId_path} target='_blank'>identification.{result.fileId_path.split(".")[1]}</a>)
-            }
-            else{
-                setIdPreviewFunction(<img style={{width:150, height:150}} src={"http://localhost:8000/"+result.fileId_path}/>)
-            }
+            previewBox(result.fileId_path,"idPreview");
         }
         if(result.filePay_path){
-            if(result.filePay_path.split(".")[1] ==="pdf" || result.filePay_path.split(".")[1] ==="doc" || result.filePay_path.split(".")[1] ==="docx"){
-                setPayPreviewFunction(<a href ={"http://localhost:8000/"+result.filePay_path} target='_blank'>payStubs.{result.filePay_path.split(".")[1]}</a>)
-            }
-            else{
-                setPayPreviewFunction(<img style={{width:150, height:150}} src={"http://localhost:8000/"+result.filePay_path}/>)
-            }
+            previewBox(result.filePay_path,"payPreview");
         }
         if(result.fileBank_path){
-            if(result.fileBank_path.split(".")[1] ==="pdf" || result.fileBank_path.split(".")[1] ==="doc" || result.fileBank_path.split(".")[1] ==="docx"){
-                setBankPreviewFunction(<a href ={"http://localhost:8000/"+result.fileBank_path} target='_blank'>bankStatements.{result.fileBank_path.split(".")[1]}</a>)
-            }
-            else{
-                setBankPreviewFunction(<img style={{width:150, height:150}} src={"http://localhost:8000/"+result.fileBank_path}/>)
-            }
+            previewBox(result.fileBank_path,"bankPreview");
         }
         if(result.fileCheque_path){
-            if(result.fileCheque_path.split(".")[1] ==="pdf" || result.fileCheque_path.split(".")[1] ==="doc" || result.fileCheque_path.split(".")[1] ==="docx"){
-                setChequePreviewFunction(<a href ={"http://localhost:8000/"+result.fileCheque_path} target='_blank'>specimenCheque.{result.fileCheque_path.split(".")[1]}</a>)
-            }
-            else{
-                setChequePreviewFunction(<img style={{width:150, height:150}} src={"http://localhost:8000/"+result.fileCheque_path}/>)
-            }
+            previewBox(result.fileCheque_path,"chequePreview");
         }
     },[])
 
@@ -508,75 +484,28 @@ function Profile() {
         }
     }
 
-    useEffect(()=>{
-        // console.log("fileVehicle:"+fileVehicle.name);
-        if(fileVehicle){
-            if(fileVehicle.name.split(".")[1] ==="pdf" || fileVehicle.name.split(".")[1] ==="doc" || fileVehicle.name.split(".")[1] ==="docx"){
-                setImagePreviewFunction(<a href ={fileVehicle && URL.createObjectURL(fileVehicle)} target='_blank'>{fileVehicle.name}</a>)
-            }
-            else{
-                setImagePreviewFunction(<img style={{width:150, height:150}} src={fileVehicle && URL.createObjectURL(fileVehicle)}/>)
-            }
-        }
-    },[fileVehicle])
-    useEffect(()=>{
-        if(fileCredit){
-            if(fileCredit.name.split(".")[1] ==="pdf" || fileCredit.name.split(".")[1] ==="doc" || fileCredit.name.split(".")[1] ==="docx"){
-                setCreditPreviewFunction(<a href ={fileCredit && URL.createObjectURL(fileCredit)} target='_blank'>{fileCredit.name}</a>)
-            }
-            else{
-                setCreditPreviewFunction(<img style={{width:150, height:150}} src={fileCredit && URL.createObjectURL(fileCredit)}/>)
-            }
-        }
-    },[fileCredit])
 
-    useEffect(()=>{
-        if(fileId){
-            if(fileId.name.split(".")[1] ==="pdf" || fileId.name.split(".")[1] ==="doc" || fileId.name.split(".")[1] ==="docx"){
-                setIdPreviewFunction(<a href ={fileId && URL.createObjectURL(fileId)} target='_blank'>{fileId.name}</a>)
-            }
-            else{
-                setIdPreviewFunction(<img style={{width:150, height:150}} src={fileId && URL.createObjectURL(fileId)}/>)
-            }
+    function updatePreviewBox(a,b){
+        if(a.name.split(".")[1] ==="pdf" || a.name.split(".")[1] ==="doc" || a.name.split(".")[1] ==="docx"){
+            setPreviewFunction(prevState =>({...prevState,[b]:<a href ={a && URL.createObjectURL(a)} target='_blank'>{a.name}</a>}))
         }
-    },[fileId])
-    useEffect(()=>{
-        if(filePay){
-            if(filePay.name.split(".")[1] ==="pdf" || filePay.name.split(".")[1] ==="doc" || filePay.name.split(".")[1] ==="docx"){
-                setPayPreviewFunction(<a href ={filePay && URL.createObjectURL(filePay)} target='_blank'>{filePay.name}</a>)
-            }
-            else{
-                setPayPreviewFunction(<img style={{width:150, height:150}} src={filePay && URL.createObjectURL(filePay)}/>)
-            }
+        else{
+            setPreviewFunction(prevState =>({...prevState,[b]:<img style={{width:150, height:150}} src={a && URL.createObjectURL(a)}/>}))
         }
-    },[filePay])
-    useEffect(()=>{
-        if(fileBank){
-            if(fileBank.name.split(".")[1] ==="pdf" || fileBank.name.split(".")[1] ==="doc" || fileBank.name.split(".")[1] ==="docx"){
-                setBankPreviewFunction(<a href ={fileBank && URL.createObjectURL(fileBank)} target='_blank'>{fileBank.name}</a>)
-            }
-            else{
-                setBankPreviewFunction(<img style={{width:150, height:150}} src={fileBank && URL.createObjectURL(fileBank)}/>)
-            }
-        }
-    },[fileBank])
-
-    useEffect(()=>{
-        if(fileCheque){
-            if(fileCheque.name.split(".")[1] ==="pdf" || fileCheque.name.split(".")[1] ==="doc" || fileCheque.name.split(".")[1] ==="docx"){
-                setChequePreviewFunction(<a href ={fileCheque && URL.createObjectURL(fileCheque)} target='_blank'>{fileCheque.name}</a>)
-            }
-            else{
-                setChequePreviewFunction(<img style={{width:150, height:150}} src={fileCheque && URL.createObjectURL(fileCheque)}/>)
-            }
-        }
-    },[fileCheque])
-
-    // if(!clientId){
-    //     setDisplayPasswordResetBtn(<Button variant="outline-primary" onClick = {passwordReset}>{t("resetPassword")}</Button>)
-    // }
+    }
 
 
+
+    useEffect(()=>{
+
+        if(fileVehicle){updatePreviewBox(fileVehicle,"imagePreview")}
+        if(fileCheque){updatePreviewBox(fileCheque,"chequePreview")}
+        if(fileId){updatePreviewBox(fileId,"idPreview")}
+        if(fileCredit){updatePreviewBox(fileCredit,"creditPreview")}
+        if(filePay){updatePreviewBox(filePay,"payPreview")}
+        if(fileBank){updatePreviewBox(fileBank,"bankPreview")}
+    },[fileVehicle,fileCheque,fileId,fileCredit,filePay,fileBank])
+    
     return(
         JSON.parse(localStorage.getItem('user-info')) ?
             <Wrapper>
@@ -629,7 +558,7 @@ function Profile() {
                             </Col>
                             <Col xs={12} md={4}>
                                 <Form.Label >{t("maritalSatus")}</Form.Label>
-                                <Form.Control className="mb-3" type="text" defaultValue={data && data.maritalSatus} onClick = {() => setIsReadonly(false)} readOnly ={isReadonly} onChange = {(e) => setMaritalStatus(e.target.value)} />
+                                <Form.Control className="mb-3" type="text" defaultValue={data && data.maritalStatus} onClick = {() => setIsReadonly(false)} readOnly ={isReadonly} onChange = {(e) => setMaritalStatus(e.target.value)} />
                             </Col>
                             <Col xs={12} md={4}>
                                 <Form.Label >{t("bankrupt")}</Form.Label>
@@ -863,14 +792,14 @@ function Profile() {
                                 <Form.Label >{t("vehicleWindowFilm")}</Form.Label>
                                 <input type="file" className="form-control" onChange = {(e) => setFileVehicle(e.target.files[0])}/>
                                 <div className="form-group preview mt-4">
-                                    {imagePreviewFunction} 
+                                    {previewFunction.imagePreview}
                                 </div>
                             </Col>
                             <Col xs={12} md={4}>
                                 <Form.Label >{t("creditReport")}</Form.Label>
                                 <input type="file" className="form-control" onChange = {(e) => setFileCredit(e.target.files[0])}/>
                                 <div className="form-group preview mt-4">
-                                    {creditPreviewFunction} 
+                                    {previewFunction.creditPreview}
                                 </div>
                             </Col>
                             <Col xs={12} md={4}>
@@ -880,7 +809,7 @@ function Profile() {
                                     Identification with front and back
                                 </Form.Text>
                                 <div className="form-group preview mt-4">
-                                    {idPreviewFunction} 
+                                    {previewFunction.idPreview}
                                 </div>
                             </Col>
                         </Row>
@@ -889,21 +818,21 @@ function Profile() {
                                 <Form.Label >{t("payStubs")}</Form.Label>
                                 <input type="file" className="form-control" onChange = {(e) => setFilePay(e.target.files[0])}/>
                                 <div className="form-group preview mt-4">
-                                    {payPreviewFunction} 
+                                    {previewFunction.payPreview}
                                 </div>
                             </Col>
                             <Col xs={12} md={4}>
                                 <Form.Label >{t("bankStatements")}</Form.Label>
                                 <input type="file" className="form-control" onChange = {(e) => setFileBank(e.target.files[0])}/>
                                 <div className="form-group preview mt-4">
-                                    {bankPreviewFunction} 
+                                    {previewFunction.bankPreview}
                                 </div>
                             </Col>
                             <Col xs={12} md={4}>
                                 <Form.Label >{t("specimenCheque")}</Form.Label>
                                 <input type="file" className="form-control" onChange = {(e) => setFileCheque(e.target.files[0])}/>
                                 <div className="form-group preview mt-4">
-                                    {chequePreviewFunction} 
+                                    {previewFunction.chequePreview}
                                 </div>
                             </Col>
                         </Row>
